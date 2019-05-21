@@ -2,6 +2,7 @@ package com.mano.selenium.demo;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -31,6 +32,23 @@ public class SeleniumDemo {
 				//To get the title of the Page
 				String title = driver.getTitle();
 				System.out.println("The Title of the page is "+title);
+				
+				//Login with Invalid credential and verify the error message
+				driver.findElement(By.id("user_login")).sendKeys("admin");
+				driver.findElement(By.id("user_pass")).sendKeys("demo12");     
+				driver.findElement(By.xpath(".//*[@id='wp-submit']")).click();
+				String message = driver.findElement(By.id("login_error")).getText();
+				System.out.println("The error message is"+ message);
+				   
+				driver.navigate().back();
+				Thread.sleep(5000);
+				
+				//Login with valid Credential
+				driver.findElement(By.id("user_login")).sendKeys("admin");
+			    driver.findElement(By.id("user_pass")).sendKeys("demo123");
+				driver.findElement(By.xpath(".//*[@id='wp-submit']")).click();
+				System.out.println("The title of the page After Login is"+driver.getTitle());
+				
 				driver.close();
 			} catch (Exception e) {
 				e.printStackTrace();
